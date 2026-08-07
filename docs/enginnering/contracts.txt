@@ -1,0 +1,231 @@
+Katiba Go domain contracts
+✓ Chapter Contract
+✓ Article Contract
+✓ LearningObjective Contract
+✓ Case Contract
+✓ ArticleCase Contract
+✓ DecisionPoint Contract
+✓ Choice Contract
+
+
+Chapter Contract (v1)
+Purpose
+A Chapter is the highest-level learning container in KatibaGo.
+
+It groups related constitutional Articles into a logical learning journey.
+
+It provides organization for learners but does not directly deliver learning activities.
+
+Responsibilities
+A Chapter is responsible for:
+
+Organizing Articles into a constitutional topic.
+
+Providing the learner's first level of navigation.
+
+Displaying introductory information about the topic.
+
+Defining whether the Chapter is available to learners.
+
+Providing metadata for curriculum organization.
+
+Does NOT Own
+A Chapter does not own:
+
+Learning Objectives
+
+Cases
+
+Decision Points
+
+Choices
+
+User Progress
+
+Citizen Explanations
+
+Constitution Text
+
+It only owns the relationship to Articles.
+
+Identity
+A Chapter is uniquely identified by:
+
+Chapter Number
+Example
+
+Chapter 4
+Attributes
+Attribute	Why it exists
+number	Constitutional identity
+official_title	Official Constitution chapter name
+citizen_title	Friendly learner-facing title
+description	Short introduction shown before learning
+is_active	Controls publication
+created_at	Audit trail
+updated_at	Audit trail
+Relationships
+Chapter
+
+1 -------- *
+
+Article
+One Chapter
+
+↓
+
+Many Articles
+
+Business Rules
+Chapter numbers must be unique.
+
+Chapter numbers must match the Constitution.
+
+Every Article belongs to exactly one Chapter.
+
+A Chapter may temporarily contain zero Articles while content is being developed.
+
+Inactive Chapters cannot be accessed by learners.
+
+Future Extensions
+Possible additions without changing the model's purpose:
+
+Cover image
+
+Theme color
+
+Estimated completion time
+
+XP available in Chapter
+
+Completion badge
+
+Article Contract (v1)
+Purpose
+An Article is the smallest learner-facing study unit.
+
+It represents one constitutional Article transformed into an interactive lesson.
+
+Responsibilities
+An Article is responsible for:
+
+Delivering one learning session.
+
+Selecting the Learning Objectives.
+
+Selecting reusable Cases.
+
+Providing progression metadata.
+
+Connecting learners to the official constitutional content.
+
+Does NOT Own
+An Article does not own:
+
+Cases
+
+Learning Objectives
+
+Decision Points
+
+Choices
+
+Safety Shields
+
+Citizen Explanations
+
+Official Constitution Text
+
+User Progress
+
+It owns only the relationships to those entities.
+
+Identity
+Article Number
+Example
+
+Article 31
+Attributes
+Attribute	Why it exists
+article_number	Constitutional identity
+official_title	Official article heading
+citizen_title	Friendly learner title
+estimated_duration	Learning time
+xp_reward	Rewards learner completion
+difficulty	Curriculum difficulty
+sequence	Learning order within the Chapter
+is_active	Publication state
+created_at	Audit
+updated_at	Audit
+Relationships
+Belongs To
+
+Article
+      │
+      ▼
+Chapter
+Uses
+
+Article
+
+* -------- *
+
+LearningObjective
+Uses
+
+Article
+
+* -------- *
+
+Case
+through
+
+ArticleCase
+Business Rules
+Article numbers are unique.
+
+Every Article belongs to one Chapter.
+
+Every Article should have at least one Learning Objective before publication.
+
+Every published Article should reference at least one Case.
+
+XP cannot be negative.
+
+Estimated duration must be positive.
+
+Future Extensions
+Without changing the model's purpose, we can later support:
+
+AI tutor prompts
+
+Adaptive difficulty
+
+Localization
+
+Voice narration
+
+Video lessons
+
+Multiple constitutional editions
+
+I Want to Add One More Section
+This is something I don't usually see in documentation, but I think it will help you tremendously as you grow.
+
+Why this is NOT a field
+For every contract, we'll include a section like this.
+
+Article
+Candidate	Decision	Reason
+Cases	❌	Reusable entity
+Learning Objectives	❌	Independent educational concept
+Safety Shield	❌	Reusable advice
+Citizen Explanation	❌	Separate educational content
+Official Constitution Text	❌	Separate legal content
+XP Reward	✅	Pure Article metadata
+Difficulty	✅	Curriculum metadata
+Estimated Duration	✅	Learning metadata
+This captures why we made each decision.
+
+Six months from now, if you revisit the code, you won't just see what you implemented—you'll remember the reasoning behind it.
+
