@@ -5,4 +5,6 @@ from .feedback_admin import FeedbackAdmin
 from .learning_objectives_admin import LearningObjectiveAdmin
 from .official_constitution_admin import OfficialConstitutionTextAdmin
 from .case_admin import CaseAdmin
-
+from .decision_point_admin import DecisionPointAdmin
+from .choice_admin import ChoiceAdmin
+from .saftey_shield_admin import SafetyShieldAdmin

@@ -1,5 +1,6 @@
 from django.contrib import admin
 from apps.content.models.case import Case
+from .decision_point_inline import DecisionPointInline
 
 @admin.register(Case)
 class CaseAdmin(admin.ModelAdmin):
@@ -8,6 +9,10 @@ class CaseAdmin(admin.ModelAdmin):
         "summary",
         "created_by",
     )
+
+    inlines = [
+        DecisionPointInline,
+    ]
 
     search_fields = (
         "case_title",

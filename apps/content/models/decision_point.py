@@ -15,6 +15,10 @@ class DecisionPoint(models.Model):
         related_name="decision_point",
         help_text="The case this decision belongs to.",
     )
+    display_order = models.PositiveIntegerField(
+        default=1,
+        help_text="The order in which this decision point is displayed within the case.",
+    )
 
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
