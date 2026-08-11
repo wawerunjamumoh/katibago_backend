@@ -30,7 +30,7 @@ class LearningObjective(models.Model):
     #Business Fields
     #===========================
     statement = models.CharField(
-        max_length=20,
+        max_length=255,
         help_text="observable Learning outcome.",
     )
 

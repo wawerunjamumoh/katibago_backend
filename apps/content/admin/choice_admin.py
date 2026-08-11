@@ -14,10 +14,6 @@ class ChoiceAdmin(admin.ModelAdmin):
         "choice_text",
     )
 
-    list_filter = (
-        "is_correct",
-        "article__article_number",
-    )
 
     ordering = (
         "decision_point__case__case_title",
@@ -26,7 +22,7 @@ class ChoiceAdmin(admin.ModelAdmin):
     )
 
     readonly_fields = (
-        "decision_point",
+        # "decision_point",
         "created_at",
         "updated_at",
     )

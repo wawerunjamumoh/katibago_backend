@@ -1,13 +1,18 @@
 from django.contrib import admin
 from ..models.decision_point import DecisionPoint
+from .choice_inline import ChoiceInline
 
 @admin.register(DecisionPoint)
 class DecisionPointAdmin(admin.ModelAdmin):
     list_display = (
+        "prompt",
         "case",
         "display_order",
-
     )
+
+    inlines = [
+        ChoiceInline,
+    ]
 
     search_fields = (
         "case",
@@ -19,7 +24,6 @@ class DecisionPointAdmin(admin.ModelAdmin):
 
     ordering = (
         "case",
-        "display_order",
     )
 
     readonly_fields = (

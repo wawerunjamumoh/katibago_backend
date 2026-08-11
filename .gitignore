@@ -1,0 +1,67 @@
+# ==========================================
+# Python Core & Bytecode
+# ==========================================
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+
+# ==========================================
+# Virtual Environments (Dependencies)
+# ==========================================
+.venv/
+venv/
+ENV/
+env/
+pythonenv/
+pip-log.txt
+pip-delete-this-directory.txt
+
+# ==========================================
+# Django Specific Exclusions
+# ==========================================
+# Local development database
+db.sqlite3
+db.sqlite3-journal
+
+# Media files (User uploads should never be tracked)
+media/
+media_root/
+
+# Collected static files (Gathered during deployment)
+static_cdn/
+staticfiles/
+
+# Logs and templates
+*.log
+*.pot
+
+# ==========================================
+# Security & Environment Variables
+# ==========================================
+# Never commit your secret keys, passwords, or API keys
+.env
+.flaskenv
+secrets.json
+local_settings.py
+
+# ==========================================
+# Testing & Code Quality
+# ==========================================
+.coverage
+htmlcov/
+.pytest_cache/
+.tox/
+.mypy_cache/
+
+# ==========================================
+# IDEs and Editors
+# ==========================================
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.swp

@@ -1,5 +1,9 @@
 from django.contrib import admin
 from ..models.article import Article
+from .learning_objective_inline import LearningObjectiveInline
+from .citizen_explanation_inline import CitizenExplanationInline
+from .official_constitution_inline import OfficialConstitutionInline
+from .saftey_shield_inline import SafetyShieldInline
 
 @admin.register(Article)
 class ArticleAdmin(admin.ModelAdmin):
@@ -7,10 +11,17 @@ class ArticleAdmin(admin.ModelAdmin):
         "article_number",
         "official_title",
         "citizen_title",
-        "chapter",
+        "part",
         "difficulty",
         "is_active",
     )
+
+    inlines = [
+        LearningObjectiveInline,
+        CitizenExplanationInline,
+        OfficialConstitutionInline,
+        SafetyShieldInline,
+    ]
 
     search_fields = (
         "article_number",
@@ -19,13 +30,13 @@ class ArticleAdmin(admin.ModelAdmin):
     )
 
     list_filter = (
-        "chapter",
+        "part",
         "difficulty",
         "is_active",
     )
 
     ordering = (
-        "chapter",
+        "part",
         "article_number",
     )
 
@@ -35,5 +46,5 @@ class ArticleAdmin(admin.ModelAdmin):
     )
 
     list_select_related = (
-        "chapter",
+        "part",
     )
