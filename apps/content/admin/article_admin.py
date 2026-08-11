@@ -11,7 +11,7 @@ class ArticleAdmin(admin.ModelAdmin):
         "article_number",
         "official_title",
         "citizen_title",
-        "chapter",
+        "part",
         "difficulty",
         "is_active",
     )
@@ -30,13 +30,13 @@ class ArticleAdmin(admin.ModelAdmin):
     )
 
     list_filter = (
-        "chapter",
+        "part",
         "difficulty",
         "is_active",
     )
 
     ordering = (
-        "chapter",
+        "part",
         "article_number",
     )
 
@@ -46,5 +46,5 @@ class ArticleAdmin(admin.ModelAdmin):
     )
 
     list_select_related = (
-        "chapter",
+        "part",
     )

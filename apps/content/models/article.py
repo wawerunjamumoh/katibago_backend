@@ -1,7 +1,8 @@
 from django.core.validators import MinValueValidator
 from django.db import models
 
-from .chapter import Chapter
+# from .chapter import Chapter
+from .part import Part
 
 
 class Difficulty(models.TextChoices):
@@ -30,11 +31,13 @@ class Article(models.Model):
     # Relationships
     # ==========================================================
 
-    chapter = models.ForeignKey(
-        Chapter,
+    part = models.ForeignKey(
+        Part,
         on_delete=models.CASCADE,
         related_name="articles",
-        help_text="The constitutional chapter this article belongs to.",
+        help_text="The part this article belongs to.",
+        null=True,
+        blank=True,
     )
 
     # ==========================================================
