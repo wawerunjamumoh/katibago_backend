@@ -8,3 +8,4 @@ from .case_admin import CaseAdmin
 from .decision_point_admin import DecisionPointAdmin
 from .choice_admin import ChoiceAdmin
 from .saftey_shield_admin import SafetyShieldAdmin
+from .part_admin import PartAdmin

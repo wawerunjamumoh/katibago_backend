@@ -9,6 +9,7 @@ from .feedback import Feedback
 from .citizen_explanation import CitizenExplanation
 from .saftey_shield import SafteyShield
 from .official_constitution_text import OfficialConstitution
+from .part import Part
 
 
 __all__ = [
@@ -22,6 +23,7 @@ __all__ = [
     "Feedback",
     "CitizenExplanation",
     "OfficialConstitution",
-    "SafteyShield"
+    "SafteyShield",
+    "Part"
 ]
 

@@ -9,6 +9,7 @@ class ArticleInline(admin.TabularInline):
         "official_title",
         "citizen_title",
         "difficulty",
+        "estimated_duration_seconds",
         "is_active",
     )
     show_change_link = True
