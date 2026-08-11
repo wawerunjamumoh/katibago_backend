@@ -9,12 +9,17 @@ class DecisionPoint(models.Model):
     can select after reading the Case narrative.
     """
 
-    case = models.OneToOneField(
+    case = models.ForeignKey(
         "Case",
         on_delete=models.CASCADE,
         related_name="decision_point",
         help_text="The case this decision belongs to.",
     )
+
+    prompt = models.TextField(
+        help_text="The prompt or question that the learner must respond to.",
+    )
+
     display_order = models.PositiveIntegerField(
         default=1,
         help_text="The order in which this decision point is displayed within the case.",
@@ -28,4 +33,4 @@ class DecisionPoint(models.Model):
         verbose_name_plural = "Decision Points"
 
     def __str__(self):
-        return f"Decision for {self.case.case_title}"
+        return f"{self.prompt}"

@@ -5,6 +5,7 @@ from .choice_inline import ChoiceInline
 @admin.register(DecisionPoint)
 class DecisionPointAdmin(admin.ModelAdmin):
     list_display = (
+        "prompt",
         "case",
         "display_order",
     )

@@ -11,7 +11,7 @@ class CaseAdmin(admin.ModelAdmin):
     )
 
     inlines = [
-        DecisionPointInline,
+        DecisionPointInline,  
     ]
 
     search_fields = (
