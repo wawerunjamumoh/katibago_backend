@@ -10,13 +10,13 @@ class ArticleCase(models.Model):
     article = models.ForeignKey(
         Article,
         on_delete=models.CASCADE,
-        related_name="article_cases",
+        related_name="case_assignment",
     )
 
     case = models.ForeignKey(
         Case,
         on_delete=models.CASCADE,
-        related_name="article_cases",
+        related_name="article_assignment",
     )
 
     # Business Fields

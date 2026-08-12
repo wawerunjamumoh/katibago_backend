@@ -26,6 +26,67 @@ class Article(models.Model):
     Citizen Explanations, Safety Shields, etc.) is linked through
     relationships and is intentionally not owned by this model.
     """
+    MIN_LEARNING_OBJECTIVES = 2
+
+    # --------------------------------------------------
+    # Domain behavior
+    # --------------------------------------------------
+    def is_ready_for_publication(self):
+        """Return True if the article meets all readiness checks for publication.
+
+        Combines learning objectives, legal content, and learning experience
+        readiness checks.
+        """
+        return (
+            self.learning_objectives_ready()
+            and self.legal_content_ready()
+            and self.learning_experience_ready()
+        )
+
+    def learning_objectives_ready(self):
+        """Check if the article has the minimum required learning objectives."""
+        return self.learning_objectives.count() >= self.MIN_LEARNING_OBJECTIVES
+
+    def legal_content_ready(self):
+        """Check if the article has all required legal content."""
+        return all(
+            [
+                hasattr(self, "citizen_explanation"),
+                hasattr(self, "official_constitution"),
+                hasattr(self, "safety_shield"),
+            ]
+        )
+
+    def learning_experience_ready(self):
+        """Check if the article has at least one learning experience (case)."""
+        # V1: Case is currently the only
+        # implemented learning mechanism.
+        return self.article_cases.exists()
+
+    def publish(self):
+        """Publish the article if it is ready for publication."""
+        if not self.is_ready_for_publication():
+            raise ValueError(
+                "Article is not ready for publication."
+            )
+
+        self.is_published = True
+        self.save(update_fields=["is_published", "updated_at"])
+
+    def activate(self):
+        """Activate the article so learners can access it."""
+        if not self.is_published:
+            raise ValueError(
+                "Cannot activate an unpublished article."
+            )
+
+        self.is_active = True
+        self.save(update_fields=["is_active", "updated_at"])
+
+    def deactivate(self):
+        """Deactivate the article so learners cannot access it."""
+        self.is_active = False
+        self.save(update_fields=["is_active", "updated_at"])
 
     # ==========================================================
     # Relationships
@@ -37,7 +98,6 @@ class Article(models.Model):
         related_name="articles",
         help_text="The part this article belongs to.",
         null=True,
-        blank=True,
     )
 
     # ==========================================================
@@ -92,13 +152,19 @@ class Article(models.Model):
         help_text="Estimated lesson duration in seconds.",
     )
 
+
     # ==========================================================
     # Publishing
     # ==========================================================
 
+    is_published = models.BooleanField(
+    default=False,
+    help_text="Indicates whether this article has been published.",
+    )
+
     is_active = models.BooleanField(
         default=False,
-        help_text="Controls whether learners can access this lesson.",
+        help_text="Controls whether learners can currently access this lesson.",
     )
 
     # ==========================================================

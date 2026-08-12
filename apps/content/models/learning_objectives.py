@@ -14,8 +14,11 @@ class CognitiveLevel(models.TextChoices):
 class LearningObjective(models.Model):
     """"
     Represents a measurable learning outcome for an article.
-    
-    Learning objectives defines what learner should know or be able to do after completing a lesson."""
+    Learning objectives defines what learner should know or 
+    be able to do after completing a lesson."""
+
+    # def learning_objectives_ready(self):
+    #     return self.learning_objectives.count() >= 2
     #===========================
     #Relationships
     #===========================
