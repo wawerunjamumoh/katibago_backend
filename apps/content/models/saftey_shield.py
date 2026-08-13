@@ -46,4 +46,4 @@ class SafteyShield(models.Model):
         verbose_name_plural = "Saftey Shields"
 
     def __str__(self):
-        return f"Saftey Shield for {self.article.title}"
+        return f"Saftey Shield for {self.article.official_title}"
