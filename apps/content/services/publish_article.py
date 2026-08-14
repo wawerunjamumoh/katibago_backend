@@ -1,4 +1,6 @@
 from ..models.article import Article
+from ..exceptions import ArticleNotFoundError
+
 
 class PublishArticleService:
     """Service for publishing articles."""
@@ -11,7 +13,13 @@ class PublishArticleService:
         Returns:
             The published article object.
         """
-        article = Article.objects.get(article_number=article_number)
+        try:
+            article = Article.objects.get(article_number=article_number)
+        except Article.DoesNotExist:
+            raise ArticleNotFoundError(
+                f"Article {article_number} does not exist yet."
+            )
+        
         article.publish()
         return article
 

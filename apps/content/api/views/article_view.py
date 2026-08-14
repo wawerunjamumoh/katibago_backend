@@ -11,6 +11,8 @@ from ...services.deactivate_article import DeactivateArticleService
 
 from ..serializers.article_serializer import ArticleSerializer
 
+from ...exceptions import ArticleNotFoundError
+
 
 class ArticleViewSet(viewsets.ModelViewSet):
     queryset = Article.objects.all()
@@ -19,14 +21,7 @@ class ArticleViewSet(viewsets.ModelViewSet):
 
     @action(detail=True,methods=["post"])
     def publish(self,request,article_number=None):
-        try:
-            article = PublishArticleService.execute(article_number)
-
-        except ValueError as exc:
-            return Response(
-                {"detail":str(exc)},
-                status=status.HTTP_400_BAD_REQUEST
-            )
+        article = PublishArticleService.execute(article_number)
 
         return Response(
             {
@@ -39,14 +34,7 @@ class ArticleViewSet(viewsets.ModelViewSet):
 
     @action(detail=True, methods=["post"])
     def activate(self, request, article_number=None):
-        try:
-            article = ActivateArticleService.execute(article_number)
-
-        except ValueError as exc:
-            return Response(
-                {"detail": str(exc)},
-                status=status.HTTP_400_BAD_REQUEST,
-            )
+        article = ActivateArticleService.execute(article_number)
 
         return Response(
             {
