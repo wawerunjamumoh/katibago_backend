@@ -4,14 +4,14 @@ class PublishArticleService:
     """Service for publishing articles."""
 
     @staticmethod
-    def execute(article):
+    def execute(article_number) -> Article:
         """Publish an article and return it.
         Args:
-            article: The article object or article id to publish.
+            article_id: The article id to publish.
         Returns:
             The published article object.
         """
-        article = Article.objects.get(pk=article_id)
+        article = Article.objects.get(article_number=article_number)
         article.publish()
         return article
 
