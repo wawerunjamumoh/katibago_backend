@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from ...models.decision_point import DecisionPoint
+from apps.content.models.decision_point import DecisionPoint
 
 class DecisionPointSerializer(serializers.ModelSerializer):
     class Meta:

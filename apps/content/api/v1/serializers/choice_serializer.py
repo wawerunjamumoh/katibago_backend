@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from ...models.choice import Choice
+from apps.content.models.choice import Choice
 
 class ChoiceSerializer(serializers.ModelSerializer):
     class Meta():

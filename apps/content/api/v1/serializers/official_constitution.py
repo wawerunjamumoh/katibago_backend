@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from ...models.official_constitution_text import OfficialConstitution
+from apps.content.models.official_constitution_text import OfficialConstitution
 
 class OfficialConstitutionSerializer(serializers.ModelSerializer):
     class Meta:

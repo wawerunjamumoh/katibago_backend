@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from ...models.saftey_shield import SafteyShield
+from apps.content.models.saftey_shield import SafteyShield
 
 class SafteyShieldSerializer(serializers.ModelSerializer):
     class Meta():

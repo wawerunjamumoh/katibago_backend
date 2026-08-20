@@ -1,8 +1,10 @@
 from rest_framework import serializers
+from apps.content.models.article_progress import ArticleProgress
 
 
 class ArticleProgressSerializer(serializers.ModelSerializer):
     class Meta:
+        model = ArticleProgress
         fields = (
             "id",
             "article",

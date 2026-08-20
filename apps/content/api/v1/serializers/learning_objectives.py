@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from ...models.learning_objectives import LearningObjective
+from apps.content.models.learning_objectives import LearningObjective
 
 class LearningObjectivesSerializer(serializers.ModelSerializer):
     class Meta:

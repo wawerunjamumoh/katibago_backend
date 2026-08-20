@@ -1,5 +1,5 @@
 from rest_framework import viewsets
-from ...models.feedback import Feedback
+from apps.content.models.feedback import Feedback
 from ..serializers.feedback_serializer import FeedbackSerializer
 
 class FeedbackViewSet(viewsets.ModelViewSet):

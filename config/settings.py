@@ -40,12 +40,14 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     # registered apps
     'rest_framework',
+    'rest_framework.authtoken',
     'apps.content',
 ]
 
 REST_FRAMEWORK = {
-    "EXCEPTION_HANDLER": "apps.content.api.exception_handler.api_exception_handler",
+    "EXCEPTION_HANDLER": "apps.content.api.v1.exception_handler.api_exception_handler",
     "DEFAULT_AUTHENTICATION_CLASSES": [
+        "rest_framework.authentication.TokenAuthentication",
         "rest_framework.authentication.SessionAuthentication",
         "rest_framework.authentication.BasicAuthentication",
     ],

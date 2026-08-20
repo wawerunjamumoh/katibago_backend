@@ -3,13 +3,13 @@ from rest_framework.decorators import action
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
 
-from ...models.article import Article
+from apps.content.models.article import Article
 
-from ...services.publish_article import PublishArticleService
-from ...services.activate_article import ActivateArticleService
-from ...services.deactivate_article import DeactivateArticleService
-from ...services.start_article import StartArticleService
-from ...services.complete_article import CompleteArticleService
+from apps.content.services.publish_article import PublishArticleService
+from apps.content.services.activate_article import ActivateArticleService
+from apps.content.services.deactivate_article import DeactivateArticleService
+from apps.content.services.start_article import StartArticleService
+from apps.content.services.complete_article import CompleteArticleService
 
 
 from ..serializers.article_serializer import ArticleSerializer
@@ -21,7 +21,7 @@ class ArticleViewSet(viewsets.ModelViewSet):
     serializer_class = ArticleSerializer
     lookup_field="article_number"
 
-    @action(detail=True,methods=["post"])
+    @action(detail=True,methods=["post"], permission_classes=[IsAuthenticated])
     def publish(self,request,article_number=None):
         article = PublishArticleService.execute(article_number)
 
@@ -34,7 +34,7 @@ class ArticleViewSet(viewsets.ModelViewSet):
             status=status.HTTP_200_OK
         )
 
-    @action(detail=True, methods=["post"])
+    @action(detail=True, methods=["post"], permission_classes=[IsAuthenticated])
     def activate(self, request, article_number=None):
         article = ActivateArticleService.execute(article_number)
 
@@ -47,7 +47,7 @@ class ArticleViewSet(viewsets.ModelViewSet):
             status=status.HTTP_200_OK,
         )
 
-    @action(detail=True, methods=["post"])
+    @action(detail=True, methods=["post"], permission_classes=[IsAuthenticated])
     def deactivate(self, request, article_number=None):
         article = DeactivateArticleService.execute(article_number)
 

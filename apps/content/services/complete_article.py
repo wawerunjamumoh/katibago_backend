@@ -2,6 +2,8 @@ from django.utils import timezone
 
 from ..models.article_progress import ArticleProgress, ArticleProgressStatus
 
+from ..exceptions import ArticleNotStartedError
+
 
 class CompleteArticleService:
 
