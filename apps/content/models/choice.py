@@ -30,3 +30,6 @@ class Choice(models.Model):
                 name="unique_choice_order_per_decision",
             )
         ]
+
+    def __str__(self):
+        return f"on {self.decision_point} -> {self.choice_text}"

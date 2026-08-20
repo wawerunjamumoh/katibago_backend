@@ -45,6 +45,10 @@ INSTALLED_APPS = [
 
 REST_FRAMEWORK = {
     "EXCEPTION_HANDLER": "apps.content.api.exception_handler.api_exception_handler",
+    "DEFAULT_AUTHENTICATION_CLASSES": [
+        "rest_framework.authentication.SessionAuthentication",
+        "rest_framework.authentication.BasicAuthentication",
+    ],
 }
 
 MIDDLEWARE = [

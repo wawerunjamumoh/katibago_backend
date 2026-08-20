@@ -33,12 +33,12 @@ class Feedback(models.Model):
         help_text="The choice this feedback explains.",
     )
 
-    citizen_explanation = models.ForeignKey(
-        CitizenExplanation,
-        on_delete=models.PROTECT,
-        related_name="feedbacks",
-        help_text="Reusable constitutional explanation supporting this feedback.",
-    )
+    # citizen_explanation = models.ForeignKey(
+    #     CitizenExplanation,
+    #     on_delete=models.PROTECT,
+    #     related_name="feedbacks",
+    #     help_text="Reusable constitutional explanation supporting this feedback.",
+    # )
 
     # ==========================
     # Business Fields
@@ -70,4 +70,4 @@ class Feedback(models.Model):
         verbose_name_plural = "Feedback"
 
     def __str__(self):
-        return f"{self.get_performance_level_display()} Feedback"
+        return f"choice: {self.choice} /n Feedback: {self.feedback_message}"

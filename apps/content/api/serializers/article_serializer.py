@@ -15,6 +15,7 @@ class ArticleSerializer(serializers.ModelSerializer):
             "estimated_duration_seconds",
             "is_published",
             "is_active",
+            "article_progress",
         )
         read_only_fields = (
             "id",

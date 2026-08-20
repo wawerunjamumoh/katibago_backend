@@ -1,17 +1,19 @@
 from rest_framework import viewsets,status
 from rest_framework.decorators import action
 from rest_framework.response import Response
+from rest_framework.permissions import IsAuthenticated
 
 from ...models.article import Article
 
 from ...services.publish_article import PublishArticleService
 from ...services.activate_article import ActivateArticleService
 from ...services.deactivate_article import DeactivateArticleService
+from ...services.start_article import StartArticleService
+from ...services.complete_article import CompleteArticleService
 
 
 from ..serializers.article_serializer import ArticleSerializer
 
-from ...exceptions import ArticleNotFoundError
 
 
 class ArticleViewSet(viewsets.ModelViewSet):
@@ -56,4 +58,38 @@ class ArticleViewSet(viewsets.ModelViewSet):
                 "is_active": article.is_active,
             },
             status=status.HTTP_200_OK,
+        )
+
+    @action(detail=True, methods=["post"],permission_classes=[IsAuthenticated],)
+    def start(self, request, article_number=None):
+
+        progress = StartArticleService.execute(
+            article_number=article_number,
+            user=request.user,
+        )
+
+        return Response(
+            {
+                "message": "Article started successfully.",
+                "article_number": progress.article.article_number,
+                "status": progress.status,
+                "started_at": progress.started_at,
+            }
+        )
+
+    @action(detail=True, methods=["post"],permission_classes=[IsAuthenticated],)
+    def complete(self, request, article_number=None):
+
+        progress = CompleteArticleService.execute(
+            article_number=article_number,
+            user=request.user,
+        )
+
+        return Response(
+            {
+                "message": "Article completed successfully.",
+                "article_number": progress.article.article_number,
+                "status": progress.status,
+                "completed_at": progress.completed_at,
+            }
         )
