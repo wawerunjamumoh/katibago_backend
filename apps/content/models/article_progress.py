@@ -9,7 +9,7 @@ class ArticleProgressStatus(models.TextChoices):
 
 class ArticleProgress(models.Model):
     user = models.ForeignKey("auth.User", on_delete=models.CASCADE)
-    article = models.OneToOneField(
+    article = models.ForeignKey(
         Article,
         on_delete=models.CASCADE, 
         related_name="article_progress",

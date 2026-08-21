@@ -24,7 +24,7 @@ class RegisterSerializer(serializers.ModelSerializer):
 
 
 class LoginSerializer(serializers.Serializer):
-    username = serializers.CharField()
+    username = serializers.CharField(trim_whitespace=False)
     password = serializers.CharField(write_only=True, trim_whitespace=False)
 
     def validate(self, attrs):
@@ -39,3 +39,4 @@ class LoginSerializer(serializers.Serializer):
 
         attrs["user"] = user
         return attrs
+

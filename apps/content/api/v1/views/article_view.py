@@ -21,7 +21,7 @@ class ArticleViewSet(viewsets.ModelViewSet):
     serializer_class = ArticleSerializer
     lookup_field="article_number"
 
-    @action(detail=True,methods=["post"], permission_classes=[IsAuthenticated])
+    @action(detail=True,methods=["post"])
     def publish(self,request,article_number=None):
         article = PublishArticleService.execute(article_number)
 
@@ -34,7 +34,7 @@ class ArticleViewSet(viewsets.ModelViewSet):
             status=status.HTTP_200_OK
         )
 
-    @action(detail=True, methods=["post"], permission_classes=[IsAuthenticated])
+    @action(detail=True, methods=["post"])
     def activate(self, request, article_number=None):
         article = ActivateArticleService.execute(article_number)
 
@@ -47,7 +47,7 @@ class ArticleViewSet(viewsets.ModelViewSet):
             status=status.HTTP_200_OK,
         )
 
-    @action(detail=True, methods=["post"], permission_classes=[IsAuthenticated])
+    @action(detail=True, methods=["post"])
     def deactivate(self, request, article_number=None):
         article = DeactivateArticleService.execute(article_number)
 
