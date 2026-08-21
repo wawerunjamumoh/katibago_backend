@@ -4,14 +4,18 @@ from rest_framework.authtoken.models import Token
 from rest_framework.test import APIClient
 
 from apps.content.models.article import Article
+from apps.content.models.article_case import ArticleCase
 from apps.content.models.article_progress import ArticleProgress, ArticleProgressStatus
 from apps.content.models.case import Case
+from apps.content.models.citizen_explanation import CitizenExplanation
 from apps.content.models.choice import Choice
 from apps.content.models.decision_point import DecisionPoint
 from apps.content.models.decision_response import DecisionResponse
+from apps.content.models.learning_objectives import LearningObjective
 from apps.content.models.learner_profile import LearnerProfile
 from apps.content.models.part import Part
 from apps.content.models.chapter import Chapter
+from apps.content.models.saftey_shield import SafteyShield
 from apps.content.services.complete_article import CompleteArticleService
 from apps.content.services.start_article import StartArticleService
 
@@ -54,6 +58,26 @@ class LearnerWorkflowTestCase(TestCase):
             summary="Choose an action.",
             story="A learner must decide what to do.",
         )
+        ArticleCase.objects.create(
+            article=self.article,
+            case=case,
+            display_order=1,
+        )
+        LearningObjective.objects.create(
+            article=self.article,
+            statement="Understand the right.",
+            display_order=1,
+        )
+        CitizenExplanation.objects.create(
+            article=self.article,
+            explanation="A plain-language explanation.",
+        )
+        SafteyShield.objects.create(
+            article=self.article,
+            practical_guidance="Use the lawful process.",
+            common_mistakes="Do not act recklessly.",
+            when_to_seek_help="Seek help if the matter escalates.",
+        )
         self.decision_point = DecisionPoint.objects.create(
             case=case,
             prompt="What should the learner do?",
@@ -88,6 +112,22 @@ class LearnerWorkflowTestCase(TestCase):
         self.assertEqual(progress.user, self.user)
         self.assertEqual(progress.status, ArticleProgressStatus.IN_PROGRESS)
         self.assertEqual(ArticleProgress.objects.filter(article=self.article).count(), 1)
+
+    def test_start_and_complete_http_actions_update_progress_and_award_xp(self):
+        start_response = self.client.post("/api/v1/articles/19/start/")
+
+        self.assertEqual(start_response.status_code, 200)
+        self.assertEqual(start_response.data["status"], "in_progress")
+
+        complete_response = self.client.post("/api/v1/articles/19/complete/")
+
+        self.assertEqual(complete_response.status_code, 200)
+        self.assertEqual(complete_response.data["status"], "completed")
+        self.assertEqual(complete_response.data["xp_awarded"], 40)
+
+        progress_response = self.client.get("/api/v1/me/progress/19/")
+        self.assertEqual(progress_response.status_code, 200)
+        self.assertEqual(progress_response.data["status"], "completed")
 
     def test_complete_marks_progress_and_awards_xp(self):
         StartArticleService.execute(self.user, 19)
@@ -160,3 +200,34 @@ class LearnerWorkflowTestCase(TestCase):
 
         self.assertEqual(response.status_code, 400)
         self.assertEqual(DecisionResponse.objects.count(), 0)
+
+    def test_learner_article_returns_aggregate_content_and_my_progress(self):
+        StartArticleService.execute(self.user, 19)
+
+        response = self.client.get("/api/v1/learn/articles/19/")
+
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(
+            response.data["article"],
+            {
+                "article_number": 19,
+                "title": "Your rights",
+                "difficulty": "easy",
+            },
+        )
+        self.assertEqual(response.data["learning_objectives"][0]["statement"], "Understand the right.")
+        self.assertEqual(response.data["experiences"][0]["title"], "A constitutional choice")
+        self.assertEqual(
+            response.data["legal_explanation"],
+            {"explanation": "A plain-language explanation."},
+        )
+        self.assertEqual(
+            response.data["safety_shield"]["practical_guidance"],
+            "Use the lawful process.",
+        )
+        self.assertEqual(response.data["progress"], {"status": "in_progress"})
+
+    def test_learner_article_requires_authentication(self):
+        response = APIClient().get("/api/v1/learn/articles/19/")
+
+        self.assertEqual(response.status_code, 401)
