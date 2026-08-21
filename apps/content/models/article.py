@@ -1,5 +1,10 @@
 from django.core.validators import MinValueValidator
 from django.db import models
+from ..exceptions import (
+    ArticleNotReadyError,
+    ArticleNotPublishedError,
+    ArticleNotFoundError,
+)
 
 # from .chapter import Chapter
 from .part import Part
@@ -64,9 +69,9 @@ class Article(models.Model):
         return self.article_cases.exists()
 
     def publish(self):
-        """Publish the article if it is ready for publication."""
+        """Publish the article if it is ready."""
         if not self.is_ready_for_publication():
-            raise ValueError(
+            raise ArticleNotReadyError(
                 "Article is not ready for publication."
             )
 
@@ -76,7 +81,7 @@ class Article(models.Model):
     def activate(self):
         """Activate the article so learners can access it."""
         if not self.is_published:
-            raise ValueError(
+            raise ArticleNotPublishedError(
                 "Cannot activate an unpublished article."
             )
 

@@ -91,4 +91,3 @@ class ArticleTestCase(TestCase):
         self.article.refresh_from_db()
 
         self.assertTrue(self.article.is_published)
-    

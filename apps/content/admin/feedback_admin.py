@@ -5,7 +5,6 @@ from ..models.feedback import Feedback
 class FeedbackAdmin(admin.ModelAdmin):
     list_display = (
         "choice",
-        "citizen_explanation",
         "feedback_message",
         "performance_level"
     )
@@ -13,7 +12,6 @@ class FeedbackAdmin(admin.ModelAdmin):
     search_fields = (
         "choice__choice_text",
         "feedback_message",
-        "citizen_explanation",
     )
 
     list_filter = (
@@ -28,10 +26,8 @@ class FeedbackAdmin(admin.ModelAdmin):
     readonly_fields = (
         "created_at",
         "updated_at",
-        "citizen_explanation"
     )
 
     list_select_related = (
-        "citizen_explanation",
-        "choice"
+        "choice",
     )
