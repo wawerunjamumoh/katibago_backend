@@ -10,6 +10,8 @@ from .views.choice_view import ChoiceViewset
 from .views.feedback_view import FeedbackViewSet
 from .views.official_constitution_view import OfficialConstitutionViewSet
 from .views.saftey_shield_view import SafteyShieldViewset
+from .views.article_progress_view import MyProgressDetailView, MyProgressListView
+from .views.learner_article_view import LearnerArticleDetailView
 
 
 
@@ -80,5 +82,16 @@ router.register(
 
 urlpatterns = [
     path("auth/", include("apps.content.api.v1.auth_urls")),
+    path(
+        "learn/articles/<int:article_number>/",
+        LearnerArticleDetailView.as_view(),
+        name="learner-article-detail",
+    ),
+    path("me/progress/", MyProgressListView.as_view(), name="my-progress-list"),
+    path(
+        "me/progress/<int:article_number>/",
+        MyProgressDetailView.as_view(),
+        name="my-progress-detail",
+    ),
     path("", include(router.urls)),
 ]

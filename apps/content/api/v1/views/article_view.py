@@ -80,7 +80,7 @@ class ArticleViewSet(viewsets.ModelViewSet):
     @action(detail=True, methods=["post"],permission_classes=[IsAuthenticated],)
     def complete(self, request, article_number=None):
 
-        progress = CompleteArticleService.execute(
+        progress, xp_awarded, total_xp = CompleteArticleService.execute(
             article_number=article_number,
             user=request.user,
         )
@@ -91,5 +91,7 @@ class ArticleViewSet(viewsets.ModelViewSet):
                 "article_number": progress.article.article_number,
                 "status": progress.status,
                 "completed_at": progress.completed_at,
+                "xp_awarded": xp_awarded,
+                "total_xp": total_xp,
             }
         )

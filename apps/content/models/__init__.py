@@ -10,6 +10,8 @@ from .citizen_explanation import CitizenExplanation
 from .saftey_shield import SafteyShield
 from .official_constitution_text import OfficialConstitution
 from .part import Part
+from .learner_profile import LearnerProfile
+from .decision_response import DecisionResponse
 
 
 __all__ = [
@@ -24,6 +26,8 @@ __all__ = [
     "CitizenExplanation",
     "OfficialConstitution",
     "SafteyShield",
-    "Part"
+    "Part",
+    "LearnerProfile",
+    "DecisionResponse",
 ]
 
