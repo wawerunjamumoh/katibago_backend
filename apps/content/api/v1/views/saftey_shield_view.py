@@ -1,5 +1,5 @@
 from rest_framework import viewsets
-from ...models.saftey_shield import SafteyShield
+from apps.content.models.saftey_shield import SafteyShield
 from ..serializers.saftey_shield_serializer import SafteyShieldSerializer
 
 class SafteyShieldViewset(viewsets.ModelViewSet):

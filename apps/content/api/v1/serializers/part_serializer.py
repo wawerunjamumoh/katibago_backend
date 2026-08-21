@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from ...models.part import Part
+from apps.content.models.part import Part
 class PartSerializer(serializers.ModelSerializer):
     class Meta:
         model = Part

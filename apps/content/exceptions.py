@@ -6,3 +6,6 @@ class ArticleNotReadyError(Exception):
 
 class ArticleNotPublishedError(Exception):
     """Raised when an unpublished article is activated."""
+
+class ArticleNotStartedError(Exception):
+    """Raised when an article complete request comes throug before a lesson is started"""

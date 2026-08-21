@@ -1,5 +1,5 @@
 from ..serializers.article_progress_serializer import ArticleProgressSerializer
-from ...models.article_progress import ArticleProgress
+from apps.content.models.article_progress import ArticleProgress
 from rest_framework import viewsets
 
 

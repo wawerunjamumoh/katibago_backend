@@ -1,5 +1,5 @@
 from rest_framework import viewsets
-from ...models.official_constitution_text import OfficialConstitution
+from apps.content.models.official_constitution_text import OfficialConstitution
 from ..serializers.official_constitution import OfficialConstitutionSerializer
 
 class OfficialConstitutionViewSet(viewsets.ModelViewSet):

@@ -1,6 +1,6 @@
 from rest_framework import viewsets
 
-from ...models.part import Part
+from apps.content.models.part import Part
 from ..serializers.part_serializer import PartSerializer
 
 class PartViewSet(viewsets.ModelViewSet):

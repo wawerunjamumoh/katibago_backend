@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from ...models.article import Article
+from apps.content.models.article import Article
 
 class ArticleSerializer(serializers.ModelSerializer):
     class Meta:

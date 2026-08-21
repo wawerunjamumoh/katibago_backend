@@ -1,4 +1,3 @@
-from django.contrib import admin
 from django.urls import include, path
 from rest_framework.routers import DefaultRouter
 
@@ -23,54 +22,54 @@ router.register(
     basename="chapter"
 )
 
-# /api/parts/
+# /api/v1/parts/
 router.register(
     "parts",
     PartViewSet,
     basename="part"
 )
-# /api/articles/
+# /api/v1/articles/
 router.register(
     "articles",
     ArticleViewSet,
     basename="article",
 )
-# /api/cases/
+# /api/v1/cases/
 router.register(
     "cases",
     CaseViewSet,
     basename="case",
 )
 
-# /api/decisionpoints/
+# /api/v1/decisionpoints/
 router.register(
     "decisionpoints",
     DecisionPointViewSet,
     basename="decisionpoint",
 )
 
-# /api/choices/
+# /api/v1/choices/
 router.register(
     "choices",
     ChoiceViewset,
     basename="choice",
 )
 
-# /api/feedbacks/
+# /api/v1/feedbacks/
 router.register(
     "feedbacks",
     FeedbackViewSet,
     basename="feedback",
 )
 
-# /api/constitution/
+# /api/v1/constitution/
 router.register(
     "constitution",
     OfficialConstitutionViewSet,
     basename="constitution",
 )
 
-# /api/safteyshield/
+# /api/v1/safteyshield/
 router.register(
     "safteyshields",
     SafteyShieldViewset,
@@ -80,6 +79,6 @@ router.register(
 
 
 urlpatterns = [
+    path("auth/", include("apps.content.api.v1.auth_urls")),
     path("", include(router.urls)),
-    path("admin/", admin.site.urls),
 ]
