@@ -11,4 +11,8 @@ class PartInline(admin.TabularInline):
         "display_order",
         "part_type"
     )
+    ordering=(
+        "chapter",
+        "display_order"
+    )
     show_change_link = True
