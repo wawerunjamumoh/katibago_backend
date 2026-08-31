@@ -149,15 +149,35 @@ class LearnerWorkflowTestCase(TestCase):
             2,
         )
 
-    def test_my_progress_list_returns_only_authenticated_users_progress(self):
+    def test_my_progress_list_returns_chapter_tree_with_article_progress(self):
         StartArticleService.execute(self.user, 19)
         StartArticleService.execute(self.other_user, 19)
 
         response = self.client.get("/api/v1/me/progress/")
 
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(len(response.data), 1)
-        self.assertEqual(response.data[0]["article"], self.article.id)
+        self.assertIn("chapters", response.data)
+        self.assertEqual(response.data["chapters"][0]["number"], 1)
+        self.assertEqual(
+            response.data["chapters"][0]["official_title"],
+            "Foundations",
+        )
+        self.assertEqual(
+            response.data["chapters"][0]["parts"][0]["friendly_title"],
+            "Getting Started",
+        )
+        self.assertEqual(
+            response.data["chapters"][0]["parts"][0]["articles"][0]["article_number"],
+            19,
+        )
+        self.assertEqual(
+            response.data["chapters"][0]["parts"][0]["articles"][0]["status"],
+            "unlocked",
+        )
+        self.assertEqual(
+            response.data["chapters"][0]["parts"][0]["articles"][0]["progress"],
+            0,
+        )
 
     def test_my_progress_detail_uses_article_number_and_is_user_scoped(self):
         StartArticleService.execute(self.other_user, 19)

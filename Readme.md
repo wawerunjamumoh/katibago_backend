@@ -156,13 +156,59 @@ GET /api/v1/me/progress/
 Authorization: Token <token>
 ```
 
+Example response:
+
+```json
+{
+  "chapters": [
+    {
+      "number": 1,
+      "official_title": "The Republic",
+      "parts": [
+        {
+          "number": 1,
+          "friendly_title": "Foundations",
+          "articles": [
+            {
+              "article_number": 1,
+              "citizen_title": "The Sovereignty of the People",
+              "status": "completed",
+              "progress": 100
+            },
+            {
+              "article_number": 2,
+              "citizen_title": "The Constitution",
+              "status": "completed",
+              "progress": 100
+            },
+            {
+              "article_number": 3,
+              "citizen_title": "National Values",
+              "status": "unlocked",
+              "progress": 0
+            },
+            {
+              "article_number": 4,
+              "citizen_title": "...",
+              "status": "locked",
+              "progress": 0
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
+```
+
 ```http
 GET /api/v1/me/progress/{article_number}/
 Authorization: Token <token>
 ```
 
-Both endpoints are user-scoped. A learner cannot view another learner's
-progress.
+This single-article route remains the per-lesson detail endpoint. The list route
+returns the full chapter-based curriculum progress tree. Both endpoints are
+user-scoped. A learner cannot view another learner's progress.
 
 ### Submit a decision response
 

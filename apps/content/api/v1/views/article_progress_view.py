@@ -1,8 +1,12 @@
-from ..serializers.article_progress_serializer import ArticleProgressSerializer
-from apps.content.models.article_progress import ArticleProgress
 from rest_framework import generics, viewsets
 from rest_framework.permissions import IsAuthenticated
+from rest_framework.response import Response
 
+from apps.content.models.article_progress import ArticleProgress
+from ..serializers.article_progress_serializer import (
+    ArticleProgressSerializer,
+    MyProgressListSerializer,
+)
 
 
 class ArticleProgressViewSets(viewsets.ModelViewSet):
@@ -11,9 +15,16 @@ class ArticleProgressViewSets(viewsets.ModelViewSet):
     lookup_field = "id"
 
 
-class MyProgressListView(generics.ListAPIView):
-    serializer_class = ArticleProgressSerializer
+class MyProgressListView(generics.GenericAPIView):
+    serializer_class = MyProgressListSerializer
     permission_classes = [IsAuthenticated]
+
+    def get(self, request, *args, **kwargs):
+        serializer = self.get_serializer(
+            instance={},
+            context={"request": request},
+        )
+        return Response(serializer.data)
 
     def get_queryset(self):
         return ArticleProgress.objects.filter(
