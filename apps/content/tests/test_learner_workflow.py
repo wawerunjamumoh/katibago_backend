@@ -139,6 +139,27 @@ class LearnerWorkflowTestCase(TestCase):
         self.assertEqual(total_xp, 40)
         self.assertEqual(LearnerProfile.objects.get(user=self.user).xp, 40)
 
+    def test_me_profile_returns_summary_metrics(self):
+        profile, _ = LearnerProfile.objects.get_or_create(user=self.user)
+        profile.xp = 280
+        profile.total_xp = 280
+        profile.current_streak = 4
+        profile.streak_freeze_count = 1
+        profile.current_level = 3
+        profile.gems_balance = 12
+        profile.save()
+
+        response = self.client.get("/api/v1/auth/me/profile/")
+
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.data["total_xp"], 280)
+        self.assertEqual(response.data["current_streak"], 4)
+        self.assertEqual(response.data["streak_freeze_count"], 1)
+        self.assertEqual(response.data["current_level"], 3)
+        self.assertEqual(response.data["gems_balance"], 12)
+        self.assertEqual(response.data["badges"], [])
+        self.assertEqual(response.data["achievements"], [])
+
     def test_each_user_can_start_same_article(self):
         StartArticleService.execute(self.user, 19)
         other_progress = StartArticleService.execute(self.other_user, 19)

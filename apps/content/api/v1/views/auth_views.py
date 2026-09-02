@@ -5,7 +5,14 @@ from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from ..serializers.auth_serializers import LoginSerializer, RegisterSerializer, UserSerializer
+from apps.content.models.learner_profile import LearnerProfile
+
+from ..serializers.auth_serializers import (
+    LearnerProfileSummarySerializer,
+    LoginSerializer,
+    RegisterSerializer,
+    UserSerializer,
+)
 
 
 class RegisterView(APIView):
@@ -47,4 +54,12 @@ class MeView(APIView):
 
     def get(self, request):
         return Response(UserSerializer(request.user).data)
+
+
+class MeProfileView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request):
+        profile, _ = LearnerProfile.objects.get_or_create(user=request.user)
+        return Response(LearnerProfileSummarySerializer(profile).data)
 

@@ -71,7 +71,35 @@ GET /api/v1/auth/me/
 Authorization: Token <token>
 ```
 
-This request has no body.
+This request has no body and returns the basic authenticated user payload.
+
+### Current learner profile summary
+
+```http
+GET /api/v1/auth/me/profile/
+Authorization: Token <token>
+```
+
+Returns the learner dashboard payload used by the frontend profile icon and summary cards.
+
+Example response:
+
+```json
+{
+  "id": 1,
+  "user": 1,
+  "xp": 280,
+  "total_xp": 280,
+  "current_streak": 4,
+  "streak_freeze_count": 1,
+  "current_level": 3,
+  "gems_balance": 12,
+  "badges": [],
+  "achievements": []
+}
+```
+
+This endpoint is intentionally isolated from the base auth response so the profile view can scale without bloating the main login or identity endpoint.
 
 ### Logout
 
@@ -156,7 +184,8 @@ GET /api/v1/me/progress/
 Authorization: Token <token>
 ```
 
-Example response:
+Example response:GET /api/v1/me/progress/
+Authorization: Token <token>
 
 ```json
 {
@@ -253,6 +282,10 @@ TOKEN=$(curl -s -X POST "$BASE_URL/auth/login/" \
 
 # 3. Confirm the user identity.
 curl "$BASE_URL/auth/me/" \
+	-H "Authorization: Token $TOKEN"
+
+# 3b. Fetch the learner profile summary for the frontend profile icon.
+curl "$BASE_URL/auth/me/profile/" \
 	-H "Authorization: Token $TOKEN"
 
 # 4. Open Article 19 and read its learning content.

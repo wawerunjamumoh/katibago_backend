@@ -1,8 +1,26 @@
 from django.contrib.auth import authenticate, get_user_model
 from rest_framework import serializers
 
+from apps.content.models.earned_achievement import EarnedAchievement
+from apps.content.models.earned_badge import EarnedBadge
+from apps.content.models.learner_profile import LearnerProfile
+
 
 User = get_user_model()
+
+
+class EarnedBadgeSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = EarnedBadge
+        fields = ("id", "badge_key", "badge_name", "earned_at")
+        read_only_fields = fields
+
+
+class EarnedAchievementSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = EarnedAchievement
+        fields = ("id", "achievement_key", "achievement_name", "earned_at")
+        read_only_fields = fields
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -10,6 +28,33 @@ class UserSerializer(serializers.ModelSerializer):
         model = User
         fields = ("id", "username", "email")
         read_only_fields = fields
+
+
+class LearnerProfileSummarySerializer(serializers.ModelSerializer):
+    badges = serializers.SerializerMethodField()
+    achievements = serializers.SerializerMethodField()
+
+    class Meta:
+        model = LearnerProfile
+        fields = (
+            "id",
+            "user",
+            "xp",
+            "total_xp",
+            "current_streak",
+            "streak_freeze_count",
+            "current_level",
+            "gems_balance",
+            "badges",
+            "achievements",
+        )
+        read_only_fields = fields
+
+    def get_badges(self, obj):
+        return EarnedBadgeSerializer(obj.badges.all(), many=True).data
+
+    def get_achievements(self, obj):
+        return EarnedAchievementSerializer(obj.achievements.all(), many=True).data
 
 
 class RegisterSerializer(serializers.ModelSerializer):

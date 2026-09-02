@@ -11,6 +11,9 @@ from .saftey_shield import SafteyShield
 from .official_constitution_text import OfficialConstitution
 from .part import Part
 from .learner_profile import LearnerProfile
+from .learner_event_log import LearnerEventLog
+from .earned_badge import EarnedBadge
+from .earned_achievement import EarnedAchievement
 from .decision_response import DecisionResponse
 
 
@@ -28,6 +31,9 @@ __all__ = [
     "SafteyShield",
     "Part",
     "LearnerProfile",
+    "LearnerEventLog",
+    "EarnedBadge",
+    "EarnedAchievement",
     "DecisionResponse",
 ]
 
